@@ -88,7 +88,22 @@ class CarouselController {
     nextSlide.classList.add('visibleSlide', 'nextSlide');
   };
 
-  prevClick () {
+  prevClick = () => {
+
+    const nextSlide = document.getElementById(this._carousel.nextIndex);
+    const currentSlide = document.getElementById(this._carousel.currentIndex);
+    let prevSlide = document.getElementById(this._carousel.prevIndex);
+
+    nextSlide.classList.remove('visibleSlide', 'nextSlide');
+
+    currentSlide.classList.replace('currentSlide', 'nextSlide');
+
+    prevSlide.classList.replace('prevSlide', 'currentSlide');
+
+    this._carousel.goPrev();
+
+    prevSlide = document.getElementById(this._carousel.prevIndex);
+    prevSlide.classList.add('visibleSlide', 'prevSlide');
 
   };
 
@@ -112,10 +127,12 @@ class CarouselController {
     if (index === this._carousel.currentIndex) {
       slideElem.classList.add('visibleSlide', 'currentSlide');
     }
-    if (index === Carousel.getNextIndex(this._carousel.currentIndex, this._carousel.length)) {
+    if (index === Carousel.getNextIndex(this._carousel.currentIndex,
+                                        this._carousel.length)) {
       slideElem.classList.add('visibleSlide', 'nextSlide');
     }
-    if (index === Carousel.getPrevIndex(this._carousel.currentIndex, this._carousel.length)) {
+    if (index === Carousel.getPrevIndex(this._carousel.currentIndex,
+                                        this._carousel.length)) {
       slideElem.classList.add('visibleSlide', 'prevSlide');
     }
     slideElem.setAttribute('id', index);
